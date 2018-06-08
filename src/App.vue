@@ -1,82 +1,63 @@
-<template>
-  <div id="app">
-    <img src="./assets/logo.png" alt="">
-    <h1>KevMusic</h1>
-    <select v-model="selectedCountry">
-      <option v-for="country in countries" :value="country.value" :key="country.value">{{ country.name }}</option>
-    </select>
-    <spinner v-show="loading"></spinner>
-    <ul v-show="!loading">
-      <artist v-for="artist in artists" :artist="artist" :key="artist.mbid"></artist>
-    </ul>
-  </div>
+<template lang="pug">
+  #app
+    section.section
+      nav.nav.has-shadow
+        .container
+          input.input(
+            type="text", 
+            placeholder="Buscar canciones", 
+            v-model="searchQuery")
+          a.button.is-info(@click="search") Buscar
+          a.button.is-danger &times;
+      
+      .container
+        p {{ searchMessage }}
+      
+      .container
+        .columns
+          .column(v-for="t in tracks")
+            | {{ t.name }} -  {{ t.artists[0].name}}
 </template>
 
 <script>
-import getArtists from './api'
-import Artist from './components/Artist.vue'
 import Spinner from './components/Spinner.vue'
+import trackService from './services/track'
 
 export default {
   name: 'app',
   data () {
     return {
-      artists: [],
-      countries: [
-        {name: 'Argentina', value: 'argentina'},
-        {name: 'Colombia', value: 'colombia'},
-        {name: 'España', value: 'spain'},
-      ],
-      selectedCountry: 'spain',
-      loading: true
+      loading: true,
+      searchQuery: '',
+      tracks: []
     }
   },
   components: {
-    Artist,
     Spinner
   },
-  methods: {
-    refreshArtists () {
-      this.loading = true
-      const self = this
-      getArtists(this.selectedCountry)
-        .then(function (artists) {
-          self.loading = false
-          self.artists = artists
-        })    
+  computed: {
+    searchMessage () {
+      return `Encontrados: ${this.tracks.length}`
     }
   },
-  mounted: function () {
-    this.refreshArtists()
+  created () {
+  },
+  methods: {
+    search () {
+      if (!this.searchQuery) { return }
+      trackService.search(this.searchQuery)
+        .then(res => {
+          this.tracks = res.tracks.items
+        })
+    }
+  },
+  mounted () {
   },
   watch: {
-    selectedCountry: function () {
-      this.refreshArtists()
-    }
   }
 }
 </script>
 
-<style lang="stylus">
-#app
-  font-family 'Avenir', Helvetica, Arial, sans-serif
-  -webkit-font-smoothing antialiased
-  -moz-osx-font-smoothing grayscale
-  text-align center
-  color #2c3e50
-  margin-top 60px
-
-h1, h2
-  font-weight normal
-
-ul
-  list-style-type none
-  padding 0
-
-li
-  display inline-block
-  margin 0 10px
-
-a
-  color #42b983
+<style lang="scss">
+  @import './scss/main.scss';
 </style>
