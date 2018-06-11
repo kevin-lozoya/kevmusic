@@ -1,12 +1,8 @@
 <template>
-  <div class="loader">Loading...</div>
+  <div style="overflow: hidden;" >
+    <div class="loader">Loading...</div>
+  </div>
 </template>
-
-<script>
-  export default {
-    name: 'spinner'
-  }
-</script>
 
 <style scoped>
   .loader,
