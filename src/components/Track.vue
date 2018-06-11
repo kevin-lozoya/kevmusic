@@ -14,23 +14,30 @@
             strong {{ track.name }}
           p.subtitle.is-6 {{ track.artists[0].name }}
       .content
-        small {{ track.duration_ms }}
+        
         nav.level
           .level-left
-            a.level-item
-              span.icon.is-small(@click="selectTrack")
+            small {{ track.duration_ms | ms-to-mm }}
+          .level-right
+            button.level-item.button.is-primary(@click="selectTrack")
+              span.icon.is-small
                 icon(name="play")
+            button.level-item.button.is-warning(@click="goToTrack(track.id)")
+              span.icon.is-small
+                icon(name="align-justify")
 </template>
 
 <script>
+import trackMixin from '@/mixins/track'
+
 export default {
+  mixins: [trackMixin],
   props: {
     track: { type: Object, required: true }
   },
   methods: {
-    selectTrack () {
-      this.$emit('select', this.track.id)
-      this.$bus.$emit('set-track', this.track)
+    goToTrack (id) {
+      this.$router.push({ name: 'track', params: { id } })
     }
   }
 }

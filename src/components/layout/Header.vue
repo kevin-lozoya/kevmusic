@@ -1,12 +1,14 @@
 <template lang="pug">
   section.hero.is-success
     .hero-head
-      header.nav
+      header.navbar
         .container
-          .nav-left
-            .nav-item
+          .navbar-start
+            .navbar-item
               strong KevMusic
-          .nav-right.nav-menu
+          .navbar-end.nav-menu
+            router-link.navbar-item(to="/") Buscar
+            router-link.navbar-item(to="about") Nosotros
     
     .hero-body
       .container.has-text-centered

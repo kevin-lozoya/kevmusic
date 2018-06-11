@@ -1,6 +1,7 @@
 <template>
   <div style="overflow: hidden;" >
     <div class="loader">Loading...</div>
+    <audio src="" au></audio>
   </div>
 </template>
 
