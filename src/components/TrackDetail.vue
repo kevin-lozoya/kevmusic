@@ -1,18 +1,19 @@
 <template lang="pug">
   .container
     km-spinner(v-show="loading")
-    .columns
+
+    .columns(v-if="!loading")
       .column.is-3.has-text-centered
         figure.media-left
           p.image
             img(:src="track.album.images[0].url")
-          p
+          p.button-bar
             a.button.is-primary(@click="selectTrack")
               icon(name="play")
-      .colum.is-8
+      .column.is-8
         .panel
           .panel-heading
-            h1.title {{ track.name }}
+            h1.title {{ trackTitle }}
           .panel-block
             article.media
               .media-content
@@ -27,6 +28,8 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from 'vuex'
+
 import KmSpinner from '@/components/shared/Spinner.vue'
 import trackMixin from '@/mixins/track'
 import trackService from '@/services/track'
@@ -42,14 +45,29 @@ export default {
       loading: false
     }
   },
+  computed: {
+    ...mapState(['trackPlayer']),
+    ...mapGetters(['trackTitle']),
+    trackTitle () {
+      return `${this.track.name} - ${this.track.artists[0].name}`
+    }
+  },
+  methods: {
+    ...mapActions(['getTrackById'])
+  },
   created () {
-    this.loading = true
     const id = this.$route.params.id
-    trackService.getById(id)
-      .then(res => {
-        this.track = res
-        this.loading = false
-      })
+
+    if (!this.trackPlayer.id || this.trackPlayer.id !== id) {
+      this.loading = true
+      trackService.getById(id)
+        .then((res) => {
+          this.track = res
+          this.loading = false
+        })
+    } else {
+      this.track = this.trackPlayer
+    }
   }
 }
 </script>
@@ -57,6 +75,9 @@ export default {
 <style lang="scss" scoped>
   .columns {
     margin: 20px;
+  }
+  .button-bar {
+    margin-top: 20px;
   }
 </style>
 

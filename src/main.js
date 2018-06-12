@@ -1,6 +1,7 @@
 import Vue from 'vue'
-import routes from '@/routes'
 import App from '@/App.vue'
+import routes from '@/routes'
+import store from '@/store'
 
 import EventBus from '@/plugins/event-bus'
 import VueRouter from 'vue-router'
@@ -22,5 +23,6 @@ Vue.component('icon', Icon)
 new Vue({
   el: '#app',
   render: h => h(App),
-  router
+  router,
+  store
 })

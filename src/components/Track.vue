@@ -14,7 +14,6 @@
             strong {{ track.name }}
           p.subtitle.is-6 {{ track.artists[0].name }}
       .content
-        
         nav.level
           .level-left
             small {{ track.duration_ms | ms-to-mm }}
@@ -31,7 +30,7 @@
 import trackMixin from '@/mixins/track'
 
 export default {
-  mixins: [trackMixin],
+  mixins: [ trackMixin ],
   props: {
     track: { type: Object, required: true }
   },

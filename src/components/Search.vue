@@ -18,8 +18,7 @@
       .container
         p {{ searchMessage }}
       
-      transition(name="move")
-        km-spinner(v-show="loading")
+      km-spinner(v-show="loading")
 
       .container(v-show="!loading")
         .columns.is-multiline

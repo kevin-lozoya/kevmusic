@@ -1,25 +1,22 @@
 <template lang="pug">
-  .content(v-if="track && track.album")
+  .content(v-if="trackPlayer && trackPlayer.album")
     p
-      img(:src="track.album.images[0].url")
+      img(:src="trackPlayer.album.images[0].url")
     p
-      strong {{ track.name }} 
-      small [{{ track.duration_ms | ms-to-mm}}]
+      strong {{ trackPlayer.name }} 
+      small [{{ trackPlayer.duration_ms | ms-to-mm}}]
     p
-      audio(controls, autoplay, :src="track.preview_url", )
+      audio(controls, autoplay, :src="trackPlayer.preview_url", )
 </template>
 
 <script>
+import trackMixin from '@/mixins/track'
+import { mapState } from 'vuex'
+
 export default {
-  data () {
-    return {
-      track: {}
-    }
-  },
-  created () {
-    this.$bus.$on('set-track', (track) => {
-      this.track = track
-    })
+  mixins: [trackMixin],
+  computed: {
+    ...mapState(['trackPlayer'])
   }
 }
 </script>
