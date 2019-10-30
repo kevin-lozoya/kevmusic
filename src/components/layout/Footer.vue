@@ -1,6 +1,6 @@
 <template lang="pug">
   footer.footer
     .container
-      .content.has-text-contered
+      .content.has-text-centered
         p by @ginerlozoya
 </template>

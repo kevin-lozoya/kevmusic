@@ -28,7 +28,7 @@
     "babel-preset-env": "^1.6.0",
     "babel-preset-stage-3": "^6.24.1",
     "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
+    "css-loader": "^3.2.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-loader": "^2.0.0",
@@ -38,13 +38,13 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "file-loader": "^1.1.4",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.13.0",
     "pug": "^2.0.3",
     "pug-loader": "^2.4.0",
     "sass-loader": "^7.0.3",
     "vue-loader": "^13.0.5",
     "vue-template-compiler": "^2.4.4",
     "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "webpack-dev-server": "^2.11.5"
   }
 }
